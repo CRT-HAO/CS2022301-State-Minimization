@@ -73,6 +73,7 @@ int main(int argc, char *argv[]) {
   output_kiss.inputs_num = input_kiss.inputs_num;
   output_kiss.outputs_num = input_kiss.outputs_num;
   output_kiss.states_num = 0;
+  output_kiss.reset_state_var = input_kiss.reset_state_var;
   for (const auto &s : mini.table) {
     if (!s.removed)
       output_kiss.states_num += 1;
@@ -81,9 +82,6 @@ int main(int argc, char *argv[]) {
   size_t i = 0;
   for (const auto &s : mini.table) {
     if (!s.removed) {
-      if (i == 0)
-        // set the reset state to the first state that has not been removed
-        output_kiss.reset_state_var = mini.states[i];
 
       for (size_t j = 0; j < mini.inputs_num; ++j) {
         output_kiss.terms.push_back({int(j), mini.states[i],
@@ -99,14 +97,11 @@ int main(int argc, char *argv[]) {
   Dot output_dot;
   output_dot.inputs_num = output_kiss.inputs_num;
   output_dot.outputs_num = output_kiss.outputs_num;
+  output_dot.start_state = input_kiss.reset_state_var;
   size_t j = 0;
   for (const auto &s : mini.table) {
     if (!s.removed) {
       output_dot.states.push_back(mini.states[j]);
-
-      if (j == 0)
-        // set the reset state to the first state that has not been removed
-        output_dot.start_state = mini.states[j];
 
       for (size_t k = 0; k < mini.inputs_num; ++k) {
         output_dot.addTerm(mini.states[j], mini.states[s.next_states[k]], k,
