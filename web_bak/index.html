@@ -1,0 +1,43 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>State Minimization</title>
+</head>
+
+<body>
+  <script type="text/javascript" src="assets/state_minimization.js"></script>
+  <script>
+    const kiss = `.start_kiss
+.i 1
+.o 1
+.p 14
+.s 7
+.r a
+0 a b 0
+1 a c 0
+0 b d 0
+1 b e 0
+0 c f 0
+1 c a 0
+0 d h 0
+1 d g 0
+0 e b 1
+1 e c 0
+0 f d 0
+1 f e 0
+0 g f 1
+1 g a 0
+0 h h 0
+1 h a 1
+.end_kiss
+`;
+
+    Module.onRuntimeInitialized = function () {
+      const run = Module.cwrap('run', 'string', ['string'])
+      console.log(run(kiss));
+    };
+  </script>
+</body>
+
+</html>

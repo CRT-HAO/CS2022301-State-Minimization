@@ -14,20 +14,21 @@ size_t StateMinimization::findStateIndex(const std::string &name) const {
   if (it != this->states.end())
     return it - this->states.begin();
 
-  return SIZE_T_MAX;
+  return SIZE_MAX;
 }
 
 size_t StateMinimization::addState(const std::string &name, size_t inputs_num) {
   this->states.push_back(name);
 
   this->table.push_back({});
-  (this->table.end() - 1)->next_states.assign(inputs_num, SIZE_T_MAX);
+  (this->table.end() - 1)->next_states.assign(inputs_num, SIZE_MAX);
   (this->table.end() - 1)->output.assign(inputs_num, -1);
 
   return this->states.size() - 1;
 }
 
 void StateMinimization::build_table(const Kiss &kiss) {
+  cout << kiss.outputs_num << endl;
   if (kiss.outputs_num != 1)
     throw "outputs number not supported, outputs number must be 1";
 
@@ -39,11 +40,11 @@ void StateMinimization::build_table(const Kiss &kiss) {
 
   for (const Kiss::Term &term : kiss.terms) {
     size_t state_index = this->findStateIndex(term.state);
-    if (state_index == SIZE_T_MAX)
+    if (state_index == SIZE_MAX)
       state_index = this->addState(term.state, this->inputs_num);
 
     size_t next_state_index = this->findStateIndex(term.next_state);
-    if (next_state_index == SIZE_T_MAX)
+    if (next_state_index == SIZE_MAX)
       next_state_index = this->addState(term.next_state, this->inputs_num);
 
     this->table[state_index].next_states[term.input] = next_state_index;
@@ -53,7 +54,7 @@ void StateMinimization::build_table(const Kiss &kiss) {
   // check is the table valid
   for (const auto &s : this->table) {
     for (size_t i = 0; i < this->inputs_num; i++) {
-      if (s.next_states[i] == SIZE_T_MAX || s.output[i] == -1)
+      if (s.next_states[i] == SIZE_MAX || s.output[i] == -1)
         throw "build table from kiss failed";
     }
   }
@@ -119,11 +120,9 @@ void StateMinimization::minimize() {
           }
         }
 
-        if (debug) {
-          std::cout << "## Minimize step " << step << std::endl;
-          this->printImplicationTable(std::cout);
-          ++step;
-        }
+        out << "## Minimize step " << step << endl;
+        this->printImplicationTable(out);
+        ++step;
       }
     }
   } while (anyIncompatible);
@@ -199,10 +198,13 @@ void StateMinimization::printImplicationTable(std::ostream &out) const {
         out << "X";
       } else {
         for (const auto &kk : jj.next_states) {
-          for (const auto &s : kk)
-            out << this->states[s] << '-';
+          for (auto it = kk.begin(); it != kk.end(); ++it) {
+            out << this->states[*it];
+            if (it != kk.end() - 1)
+              out << "-";
+          }
 
-          out << " / ";
+          out << " <br /> ";
         }
       }
       out << " | ";

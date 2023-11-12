@@ -1,0 +1,33 @@
+.md h2 {
+  font-size: 28px;
+  font-weight: bold;
+  padding-top: 24px;
+  /* padding-bottom: 12px; */
+}
+
+.md h3 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.md table {
+  text-align: center;
+}
+
+.md td, .md th {
+  border: 1px solid lightgray;
+  min-width: 80px;
+  font-family: monospace;
+  padding: 6px;
+  transition-duration: .15s;
+  transition-property: background;
+  transition-timing-function: cubic-bezier();
+}
+
+.md td:first-child {
+  font-weight: bold;
+}
+
+.md td:hover, .md th:hover {
+  background: #e6e6e6;
+}
