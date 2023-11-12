@@ -38,6 +38,6 @@
 .DS_Store
 
 # Test files
-output.kiss
-output.dot
-output.png
+/examples/**/*output*.kiss
+/examples/**/*output*.dot
+/examples/**/*output*.png
