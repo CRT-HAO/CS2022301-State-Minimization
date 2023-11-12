@@ -29,18 +29,24 @@ int main(int argc, char *argv[]) {
 
   ifstream ifs;
   ifs.open(input_kiss_file);
-  if (!ifs.is_open())
-    throw "cannot open input kiss file";
+  if (!ifs.is_open()) {
+    cout << "Error: cannot open input kiss file" << endl;
+    return 1;
+  }
 
   ofstream ofs_kiss;
   ofs_kiss.open(output_kiss_file);
-  if (!ofs_kiss.is_open())
-    throw "cannot open output kiss file";
+  if (!ofs_kiss.is_open()) {
+    cout << "Error: cannot open output kiss file" << endl;
+    return 1;
+  }
 
   ofstream ofs_dot;
   ofs_dot.open(output_dot_file);
-  if (!ofs_dot.is_open())
-    throw "cannot open output dot file";
+  if (!ofs_dot.is_open()) {
+    cout << "Error: cannot open output dot file" << endl;
+    return 1;
+  }
 
   Kiss input_kiss;
   input_kiss.parse(ifs);
