@@ -29,6 +29,7 @@ size_t StateMinimization::addState(const std::string &name, size_t inputs_num) {
 }
 
 void StateMinimization::build_table(const Kiss &kiss) {
+  cout << kiss.outputs_num << endl;
   if (kiss.outputs_num != 1)
     throw "outputs number not supported, outputs number must be 1";
 
@@ -214,10 +215,13 @@ void StateMinimization::printImplicationTable(std::ostream &out) const {
         out << "X";
       } else {
         for (const auto &kk : jj.next_states) {
-          for (const auto &s : kk)
-            out << this->states[s] << '-';
+          for (auto it = kk.begin(); it != kk.end(); ++it) {
+            out << this->states[*it];
+            if (it != kk.end() - 1)
+              out << "-";
+          }
 
-          out << " / ";
+          out << " <br /> ";
         }
       }
       out << " | ";

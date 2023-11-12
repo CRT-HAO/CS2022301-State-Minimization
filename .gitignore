@@ -33,6 +33,7 @@
 
 # Build
 /build
+/build_wasm
 
 # macOS
 .DS_Store
