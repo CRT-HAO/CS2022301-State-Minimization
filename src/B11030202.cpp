@@ -53,7 +53,12 @@ int main(int argc, char *argv[]) {
 
   StateMinimization mini;
 
-  mini.build_table(input_kiss);
+  try {
+    mini.build_table(input_kiss);
+  } catch (const char *msg) {
+    cout << "Error: " << msg << endl;
+    return 1;
+  }
 
   mini.build_implication_table();
 

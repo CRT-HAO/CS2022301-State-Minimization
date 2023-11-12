@@ -50,10 +50,11 @@ void StateMinimization::build_table(const Kiss &kiss) {
     this->table[state_index].output[term.input] = term.output;
   }
 
+  // check is the table valid
   for (const auto &s : this->table) {
-    for (size_t i = 0; i < kiss.inputs_num; i++) {
+    for (size_t i = 0; i < this->inputs_num; i++) {
       if (s.next_states[i] == SIZE_T_MAX || s.output[i] == -1)
-        throw "build tabl from kiss file failed";
+        throw "build table from kiss failed";
     }
   }
 }
