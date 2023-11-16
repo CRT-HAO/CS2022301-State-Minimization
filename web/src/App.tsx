@@ -5,10 +5,14 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./style.css";
 import rehypeRaw from "rehype-raw";
+import { exampleKiss } from "./example_kiss.js";
+import ChangelogModal from "./ChangelogModal.js";
+import githubLogo from "./assets/github.svg";
 
 function App() {
   const [kiss, setKiss] = useState("");
   const [result, setResult] = useState("");
+  const [changelogModal, setChangelogModal] = useState(true);
 
   const callRun = useCallback(
     async (kiss: string) => {
@@ -21,30 +25,7 @@ function App() {
   );
 
   const loadExample = () => {
-    const example = `.start_kiss
-.i 1
-.o 1
-.p 14
-.s 7
-.r a
-0 a a 0
-1 a b 0
-0 b c 0
-1 b d 0
-0 c a 0
-1 c d 0
-0 d e 0
-1 d f 1
-0 e a 0
-1 e f 1
-0 f g 0
-1 f f 1
-0 g a 0
-1 g f 1
-.end_kiss
-`;
-
-    setKiss(example);
+    setKiss(exampleKiss);
   };
 
   const clear = () => {
@@ -54,10 +35,15 @@ function App() {
 
   return (
     <>
+      <ChangelogModal
+        isOpen={changelogModal}
+        onOpenChange={(open) => setChangelogModal(open)}
+      />
       <div className="text-center p-6">
         <h1 className="text-5xl font-bold p-4">State Minimization</h1>
         <div className="h-4"></div>
         <div className="flex flex-col flex-nowrap justify-center align-middle items-center">
+          <div className="h-4"></div>
           <Textarea
             label="Input kiss"
             placeholder="Enter your input kiss"
@@ -108,6 +94,17 @@ function App() {
               HAO
             </a>{" "}
             with ❤️
+          </p>
+          <div className="h-4" />
+          <p>
+            <a
+              href="https://github.com/CRT-HAO/CS2022301-State-Minimization"
+              target="_blank"
+            >
+              <img src={githubLogo} className="w-10 inline-block" />
+            </a>
+            <br />
+            Version 0.1.0
           </p>
         </div>
       </div>

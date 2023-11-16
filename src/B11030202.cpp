@@ -37,6 +37,29 @@ EMSCRIPTEN_KEEPALIVE const char *run(const char *input) {
     return "Error";
   }
 
+  Dot input_dot;
+  input_dot.inputs_num = input_kiss.inputs_num;
+  input_dot.outputs_num = input_kiss.outputs_num;
+  input_dot.start_state = input_kiss.reset_state_var;
+  size_t l = 0;
+  for (const auto &s : mini.table) {
+    if (!s.removed) {
+      input_dot.states.push_back(mini.states[l]);
+
+      for (size_t k = 0; k < mini.inputs_num; ++k) {
+        input_dot.addTerm(mini.states[l], mini.states[s.next_states[k]], k,
+                          s.output[k]);
+      }
+    }
+    ++l;
+  }
+
+  stringstream oss_idot;
+  input_dot.exports(oss_idot);
+
+  out << "## Input dot" << endl;
+  out << "```dot" << endl << oss_idot.str() << "```" << endl;
+
   mini.build_implication_table();
 
   out << "## Implication table" << endl;
