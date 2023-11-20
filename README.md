@@ -101,6 +101,46 @@ dot - graphviz version 9.0.0 (20230911.1827)
 .end_kiss
 ```
 
+### Input dot
+
+```dot
+digraph STG {
+	rankdir=LR;
+
+	INIT [shape=point];
+	a [label="a"];
+	b [label="b"];
+	c [label="c"];
+	d [label="d"];
+	e [label="e"];
+	f [label="f"];
+	h [label="h"];
+	g [label="g"];
+
+	INIT -> a;
+	a -> b [label="0/0"];
+	a -> c [label="1/0"];
+	b -> d [label="0/0"];
+	b -> e [label="1/0"];
+	c -> f [label="0/0"];
+	c -> a [label="1/0"];
+	d -> h [label="0/0"];
+	d -> g [label="1/0"];
+	e -> b [label="0/1"];
+	e -> c [label="1/0"];
+	f -> d [label="0/0"];
+	f -> e [label="1/0"];
+	h -> h [label="0/0"];
+	h -> a [label="1/1"];
+	g -> f [label="0/1"];
+	g -> a [label="1/0"];
+}
+```
+
+### Input PNG
+
+![test_output](./assets/test_output.png)
+
 ### Output kiss
 
 ```kiss
