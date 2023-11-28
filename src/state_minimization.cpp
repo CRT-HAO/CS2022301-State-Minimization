@@ -3,9 +3,9 @@
 #include "utilities.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
@@ -38,6 +38,8 @@ void StateMinimization::build_table(const Kiss &kiss) {
 
   this->table.clear();
 
+  this->reset_state = kiss.reset_state_var;
+
   for (const Kiss::Term &term : kiss.terms) {
     size_t state_index = this->findStateIndex(term.state);
     if (state_index == SIZE_MAX)
@@ -58,6 +60,12 @@ void StateMinimization::build_table(const Kiss &kiss) {
         throw "build table from kiss failed";
     }
   }
+
+  // check if the reset state is valid
+  if (find(this->states.begin(), this->states.end(), this->reset_state) ==
+      this->states.end())
+    // throw error if cant find reset state in the table
+    throw "invalid reset state";
 }
 
 void StateMinimization::build_implication_table() {
@@ -149,6 +157,10 @@ void StateMinimization::minimize() {
       }
 
       this->table[remove].removed = true;
+
+      // replace reset state if it's removed
+      if (this->reset_state == this->states[remove])
+        this->reset_state = this->states[leave];
     }
   }
 }
@@ -169,8 +181,10 @@ void StateMinimization::printTable(std::ostream &out) const {
 
   size_t i = 0;
   for (const auto &s : this->table) {
-    if (s.removed)
+    if (s.removed) {
+      ++i;
       continue;
+    }
 
     out << "| " << this->states[i] << " | ";
     for (size_t i = 0; i < this->inputs_num; ++i) {

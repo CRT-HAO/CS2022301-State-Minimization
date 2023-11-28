@@ -19,6 +19,7 @@ private:
 
 public:
   size_t inputs_num;
+  std::string reset_state;
   std::vector<std::string> states;
   std::vector<State> table;
   std::vector<std::vector<Implication>> implication_table;

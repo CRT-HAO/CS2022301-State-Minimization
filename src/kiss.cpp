@@ -36,7 +36,7 @@ void Kiss::parse(std::istream &in) {
       ss >> this->reset_state_var;
     else if (command == ".end_kiss")
       return;
-    else {
+    else if (command.length() != 0) {
       int input = Utilities::binarytoDecimal(command);
       string var;
       string next_state_var;
