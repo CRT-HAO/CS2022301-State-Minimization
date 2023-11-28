@@ -125,13 +125,13 @@ void StateMinimization::minimize() {
           if (next_states_pair.incompatible) {
             block.incompatible = true;
             anyIncompatible |= true;
-          }
-        }
 
-        if (debug) {
-          std::cout << "## Minimize step " << step << std::endl;
-          this->printImplicationTable(std::cout);
-          ++step;
+            if (debug) {
+              std::cout << "## Minimize step " << step << std::endl;
+              this->printImplicationTable(std::cout);
+              ++step;
+            }
+          }
         }
       }
     }
