@@ -133,6 +133,11 @@ void StateMinimization::minimize() {
           }
         }
       }
+      if (anyIncompatible) {
+        out << "## Minimize step " << step << endl;
+        this->printImplicationTable(out);
+        ++step;
+      }
     }
   } while (anyIncompatible);
 
