@@ -19,13 +19,13 @@ const ChangelogModal = ({ isOpen, onOpenChange }: Props) => {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              What's changed in V0.1.0
+              What's changed in V0.2.0
             </ModalHeader>
             <ModalBody>
               <p>
-                1. Reduced unnecessary simplification steps.
+                1. Optimize simplification steps.
                 <br />
-                2. Export input dot
+                2. Fixed issue where reset states would not be replaced.
               </p>
             </ModalBody>
             <ModalFooter>

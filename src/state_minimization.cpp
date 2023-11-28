@@ -127,11 +127,9 @@ void StateMinimization::minimize() {
             block.incompatible = true;
             anyIncompatible |= true;
 
-            if (debug) {
-              std::cout << "## Minimize step " << step << std::endl;
-              this->printImplicationTable(std::cout);
-              ++step;
-            }
+            out << "## Minimize step " << step << std::endl;
+            this->printImplicationTable(out);
+            ++step;
           }
         }
       }

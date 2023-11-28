@@ -104,7 +104,7 @@ function App() {
               <img src={githubLogo} className="w-10 inline-block" />
             </a>
             <br />
-            Version 0.1.0
+            Version 0.2.0
           </p>
         </div>
       </div>

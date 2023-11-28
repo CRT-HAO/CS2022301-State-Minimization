@@ -80,7 +80,7 @@ EMSCRIPTEN_KEEPALIVE const char *run(const char *input) {
   output_kiss.inputs_num = input_kiss.inputs_num;
   output_kiss.outputs_num = input_kiss.outputs_num;
   output_kiss.states_num = 0;
-  output_kiss.reset_state_var = input_kiss.reset_state_var;
+  output_kiss.reset_state_var = mini.reset_state;
   for (const auto &s : mini.table) {
     if (!s.removed)
       output_kiss.states_num += 1;
@@ -108,7 +108,7 @@ EMSCRIPTEN_KEEPALIVE const char *run(const char *input) {
   Dot output_dot;
   output_dot.inputs_num = output_kiss.inputs_num;
   output_dot.outputs_num = output_kiss.outputs_num;
-  output_dot.start_state = input_kiss.reset_state_var;
+  output_dot.start_state = mini.reset_state;
   size_t j = 0;
   for (const auto &s : mini.table) {
     if (!s.removed) {
